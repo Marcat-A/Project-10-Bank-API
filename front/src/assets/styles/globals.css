@@ -5,6 +5,10 @@ html {
   text-align: center;
   color: #2c3e50;
 }
+#root {
+  display: flex;
+  flex-direction: column;
+}
 
 body {
   margin: 0;
@@ -14,7 +18,8 @@ body {
 }
 
 .main {
-  flex: 1;
+  height: 100%;
+  min-height: 85vh;
 }
 
 .bg-dark {
@@ -71,7 +76,7 @@ body {
 }
 
 .hero {
-  background-image: url("../img/bank-tree.jpeg");
+  background-image: url("../../assets/bank-tree.jpeg");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
