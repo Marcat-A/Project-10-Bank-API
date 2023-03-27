@@ -1,17 +1,34 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../redux/apiCalls";
+import toast, { Toaster } from "react-hot-toast";
+import { Navigate } from "react-router-dom";
 
 const SignIn = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const { pending, token } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleError = (error) => {
+    toast.error(error);
+  };
+
+  const handleValid = (message) => {
+    toast.success(message);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("test");
+    login({ email, password }, dispatch, handleError, handleValid);
   };
   return (
     <>
+      <div>
+        <Toaster />
+      </div>
       <main className="main bg-dark">
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
@@ -23,7 +40,7 @@ const SignIn = () => {
                 type="text"
                 id="username"
                 onChange={(e) => {
-                  setUsername(e.target.value);
+                  setEmail(e.target.value);
                 }}
               />
             </div>
@@ -49,12 +66,15 @@ const SignIn = () => {
             </div>
             <button
               className="sign-in-button"
+              disabled={pending}
               onClick={(e) => {
                 handleSubmit(e);
               }}
             >
               Sign In
             </button>
+            {pending && <span>Loading ...</span>}
+            {token !== "" ? <Navigate to="/user" /> : ""}
           </form>
         </section>
       </main>
