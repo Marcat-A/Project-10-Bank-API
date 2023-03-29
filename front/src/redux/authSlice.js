@@ -52,6 +52,21 @@ const authSlice = createSlice({
       state.pending = false;
       state.error = true;
     },
+    editUserStart: (state) => {
+      state.pending = true;
+    },
+    editUserSuccess: (state, action) => {
+      console.log(action);
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
+      state.pending = false;
+      state.error = false;
+    },
+    editUserError: (state) => {
+      state.pending = false;
+      state.error = true;
+    },
+
     fetchUserStart: (state) => {
       state.pending = true;
     },
@@ -83,5 +98,8 @@ export const {
   fetchUserStart,
   fetchUserSucces,
   fetchUserError,
+  editUserError,
+  editUserStart,
+  editUserSuccess,
 } = authSlice.actions;
 export default authSlice.reducer;

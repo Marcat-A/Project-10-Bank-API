@@ -13,6 +13,9 @@ import {
   logoutStart,
   logoutSuccess,
   logoutError,
+  editUserStart,
+  editUserError,
+  editUserSuccess,
 } from "./authSlice";
 
 export const login = async (user, dispatch, handleError, handleValid) => {
@@ -61,5 +64,17 @@ export const signIn = async (data, dispatch, handleError) => {
   } catch (err) {
     handleError(`${err}`);
     dispatch(signUpError(err));
+  }
+};
+
+export const editUser = async (data, dispatch, token, handleError) => {
+  dispatch(editUserStart());
+  try {
+    axios.defaults.headers.common["Authorization"] = `Bearer${token}`;
+    await axios.put("http://localhost:3001/api/v1/user/profile", data);
+    dispatch(editUserSuccess(data));
+  } catch (err) {
+    handleError(`${err}`);
+    dispatch(editUserError(err));
   }
 };
