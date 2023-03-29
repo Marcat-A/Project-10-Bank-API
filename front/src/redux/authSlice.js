@@ -25,6 +25,18 @@ const authSlice = createSlice({
       state.pending = false;
       state.error = action.payload.message;
     },
+    logoutStart: (state) => {
+      state.pending = true;
+    },
+    logoutSuccess: (state) => {
+      state.token = "";
+      state.pending = false;
+      state.error = false;
+    },
+    logoutError: (state, action) => {
+      state.pending = false;
+      state.error = action.payload.message;
+    },
     signUpStart: (state) => {
       state.pending = true;
     },
@@ -33,6 +45,7 @@ const authSlice = createSlice({
       state.password = action.payload.password;
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
+      state.pending = false;
       state.error = false;
     },
     signUpError: (state) => {
@@ -61,6 +74,9 @@ export const {
   loginStart,
   loginSuccess,
   loginError,
+  logoutStart,
+  logoutSuccess,
+  logoutError,
   signUpStart,
   signUpSuccess,
   signUpError,

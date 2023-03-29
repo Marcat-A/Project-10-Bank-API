@@ -294,3 +294,21 @@ body {
     width: 200px;
   }
 }
+
+/* Personnal stuff */
+
+.create {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-top: 1em;
+}
+
+.button {
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 16px;
+}
