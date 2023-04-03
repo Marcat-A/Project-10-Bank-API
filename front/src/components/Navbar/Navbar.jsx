@@ -1,16 +1,19 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/argentBankLogo.png";
-import { handleError } from "../../pages/SignIn.jsx/SignIn";
+import { handleError } from "../../pages/SignIn/SignIn";
 import { logout } from "../../redux/apiCalls";
 
 const Navbar = () => {
-  const { token } = useSelector((state) => state.user);
+  const { token, firstName } = useSelector((state) => state.user);
+  const sessionToken = localStorage.getItem("sessionToken");
   const dispatch = useDispatch();
-  const disconnect = () => {
+  const navigate = useNavigate();
+  const disconnect = async () => {
     try {
-      logout(token, dispatch);
+      await logout(token, dispatch);
+      navigate("/");
     } catch (err) {
       handleError(err.message);
     }
@@ -26,16 +29,29 @@ const Navbar = () => {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
       <div>
-        {!token ? (
+        {!sessionToken ? (
           <Link to="/sign-in" className="main-nav-item">
             <i className="fa fa-user-circle"></i>
             Sign In
           </Link>
         ) : (
-          <button onClick={() => disconnect()} className="main-nav-item button">
-            <i className="fa fa-user-circle"></i>
-            Sign Out
-          </button>
+          <div className="logout">
+            <Link to="/user" className="main-nav-item button">
+              <div className="secondElementNav">
+                <i className="fa fa-user-circle"></i>
+                {firstName}
+              </div>
+            </Link>
+            <button
+              onClick={() => disconnect()}
+              className="main-nav-item button"
+            >
+              <div className="secondElementNav">
+                <i className="fa-solid fa-arrow-right-from-bracket"></i>
+                Sign Out
+              </div>
+            </button>
+          </div>
         )}
       </div>
     </nav>

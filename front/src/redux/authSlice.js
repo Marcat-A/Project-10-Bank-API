@@ -56,7 +56,6 @@ const authSlice = createSlice({
       state.pending = true;
     },
     editUserSuccess: (state, action) => {
-      console.log(action);
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.pending = false;

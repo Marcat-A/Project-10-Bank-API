@@ -2,18 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { editUser, fetchUser } from "../../redux/apiCalls";
-import { handleError, handleValid } from "../SignIn.jsx/SignIn";
+import { handleError, handleValid } from "../SignIn/SignIn";
 
 const User = () => {
-  const [update, setUpdate] = useState(true);
+  const [update, setUpdate] = useState(false);
+  /* istanbul ignore next */
   useEffect(() => {
-    fetchUser(token, dispatch);
+    if (sessionToken === "default") {
+      fetchUser(token, dispatch);
+      localStorage.setItem("sessionToken", token);
+    } else {
+      fetchUser(sessionToken, dispatch);
+    }
   }, []);
   const { token, firstName, lastName } = useSelector((state) => state.user);
-  const { user } = useSelector((state) => state);
+  // const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [newFirstName, setNewFirstName] = useState(firstName);
   const [newLastName, setNewLastName] = useState(lastName);
+  const sessionToken = localStorage.getItem("sessionToken");
 
   const handleEdit = () => {
     try {

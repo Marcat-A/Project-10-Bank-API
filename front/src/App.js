@@ -1,6 +1,6 @@
 import Home from "./pages/Home/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SignIn from "./pages/SignIn.jsx/SignIn";
+import SignIn from "./pages/SignIn/SignIn";
 import NotFound from "./pages/NotFound/NotFound";
 import "../src/assets/styles/globals.css";
 import Navbar from "./components/Navbar/Navbar";

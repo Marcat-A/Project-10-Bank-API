@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, signIn } from "../../redux/apiCalls";
 import toast, { Toaster } from "react-hot-toast";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +14,8 @@ const SignIn = () => {
   const [create, setCreate] = useState(false);
   const { pending, token } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const sessionToken = localStorage.getItem("sessionToken");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,6 +30,12 @@ const SignIn = () => {
       );
     }
   };
+
+  useEffect(() => {
+    if (sessionToken) {
+      navigate("/user");
+    }
+  });
   return !create ? (
     <>
       <div>
@@ -155,7 +163,6 @@ const SignIn = () => {
               Create Account
             </button>
             {pending && <span>Loading ...</span>}
-            {token !== "" ? <Navigate to="/user" /> : ""}
             <span
               className="create"
               onClick={() => {

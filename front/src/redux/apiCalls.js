@@ -1,5 +1,5 @@
 import axios from "axios";
-import { handleValid } from "../pages/SignIn.jsx/SignIn";
+import { handleValid } from "../pages/SignIn/SignIn";
 import {
   loginStart,
   loginError,
@@ -27,6 +27,7 @@ export const login = async (user, dispatch, handleError, handleValid) => {
     );
     dispatch(loginSuccess(res.data));
     handleValid(res.data.message);
+    localStorage.setItem("sessionToken", "default");
   } catch (err) {
     handleError(`${err}`);
     dispatch(loginError(err));
@@ -50,6 +51,7 @@ export const logout = async (token, dispatch) => {
   dispatch(logoutStart());
   try {
     dispatch(logoutSuccess(token));
+    localStorage.removeItem("sessionToken");
   } catch (err) {
     dispatch(logoutError(err));
   }
