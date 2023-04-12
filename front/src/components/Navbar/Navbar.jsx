@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/argentBankLogo.png";
 import { handleError } from "../../pages/SignIn/SignIn";
-import { logout } from "../../redux/apiCalls";
+import { fetchUser, logout } from "../../redux/apiCalls";
 
 const Navbar = () => {
   const { token, firstName } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (
+      window.location.href !== "http://localhost:3000/sign-in" &&
+      sessionToken
+    )
+      if (sessionToken === "default") {
+        fetchUser(token, dispatch);
+        localStorage.setItem("sessionToken", token);
+      } else {
+        fetchUser(sessionToken, dispatch);
+      }
+  }, []);
+
   const sessionToken = localStorage.getItem("sessionToken");
   const dispatch = useDispatch();
   const navigate = useNavigate();

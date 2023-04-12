@@ -9,7 +9,7 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /user/:userId/transactions:
+  /transactions:
     get:
       security:
         - Bearer: []
@@ -34,7 +34,7 @@ paths:
           description: Invalid Fields
         "500":
           description: Internal Server Error
-  /user/{userId}/transactions/{transactionId}:
+  /transactions/{transactionId}:
     get:
       security:
         - Bearer: []
@@ -47,11 +47,6 @@ paths:
           type: string
           name: Authorization
           description: Attach Bearer JWT token
-          required: true
-        - in: path
-          type: number
-          name: userId
-          description: ID of the User
           required: true
         - in: path
           type: number
@@ -81,11 +76,6 @@ paths:
           type: string
           name: Authorization
           description: Attach Bearer JWT token
-          required: true
-        - in: path
-          type: number
-          name: userId
-          description: ID of the User
           required: true
         - in: path
           type: number

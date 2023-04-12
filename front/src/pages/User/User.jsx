@@ -6,7 +6,6 @@ import { handleError, handleValid } from "../SignIn/SignIn";
 
 const User = () => {
   const [update, setUpdate] = useState(false);
-  /* istanbul ignore next */
   useEffect(() => {
     if (sessionToken === "default") {
       fetchUser(token, dispatch);
@@ -16,7 +15,6 @@ const User = () => {
     }
   }, []);
   const { token, firstName, lastName } = useSelector((state) => state.user);
-  // const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [newFirstName, setNewFirstName] = useState(firstName);
   const [newLastName, setNewLastName] = useState(lastName);
