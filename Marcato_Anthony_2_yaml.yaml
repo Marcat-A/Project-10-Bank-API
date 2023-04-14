@@ -16,7 +16,7 @@ paths:
       tags:
         - Transactions Module
       summary: Transactions
-      description: API for Transactions
+      description: API for fetching all the transactions
       parameters:
         - in: header
           type: string
@@ -34,6 +34,10 @@ paths:
           description: Invalid Fields
         "500":
           description: Internal Server Error
+        "401":
+          description: Unauthorized Operation
+        "404":
+          description: Transactions Not Found
   /transactions/{transactionId}:
     get:
       security:
@@ -41,7 +45,7 @@ paths:
       tags:
         - Transactions Module
       summary: Transaction
-      description: API for Transaction
+      description: API for fetching a selected transaction
       parameters:
         - in: header
           type: string
@@ -57,20 +61,24 @@ paths:
         - application/json
       responses:
         "200":
-          description: Transaction Successfully
+          description: Transaction Successfully Fetched
           schema:
             $ref: "#/definitions/TransactionResponse"
         "400":
           description: Invalid Fields
         "500":
           description: Internal Server Error
+        "401":
+          description: Unauthorized Operation
+        "404":
+          description: Transaction Not Found
     put:
       security:
         - Bearer: []
       tags:
         - Transactions Module
       summary: Transaction
-      description: API for Transaction
+      description: API for modifying a selected transaction
       parameters:
         - in: header
           type: string
@@ -92,13 +100,17 @@ paths:
         - application/json
       responses:
         "200":
-          description: Transaction Successfully
+          description: Transaction Modify Successfully
           schema:
-            $ref: "#/definitions/TransactionResponse"
+            $ref: "#/definitions/ModifyTransaction"
         "400":
           description: Invalid Fields
         "500":
           description: Internal Server Error
+        "401":
+          description: Unauthorized Operation
+        "404":
+          description: Transaction Not Found
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -122,6 +134,15 @@ definitions:
         type: number
       balance:
         type: number
+      type:
+        type: number
+      category:
+        type: number
+      notes:
+        type: string
+  ModifyTransaction:
+    type: object
+    properties:
       type:
         type: number
       category:
